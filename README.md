@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Aesthetica E-commerce
 
 Node.js + Express + MySQL backend, plain HTML/CSS/JS frontend. One server runs everything.
@@ -26,3 +27,6 @@ Run `npm run setup` again on an existing database to add the product Q&A table; 
 - Delivery areas, coupons, categories: all editable from the admin panel.
 email: admin@aesthetica.com
 pass: Admin@12345
+=======
+# CodeAlpha_Simple-E-Commerce-Store-Asthetica
+>>>>>>> 16310daaf10b9a32b365b60a84397b3687303cd2
