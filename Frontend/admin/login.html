@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Admin login · Aesthetica Admin</title>
+    <link rel="icon" href="../assets/logo-brand.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Hind+Siliguri:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/admin-style.css">
+</head>
+<body data-page="login">
+    <div class="login-wrap"><div class="login-box">
+        <div class="login-logo">
+            <img src="../assets/logo-brand.svg" alt="Aesthetica logo">
+            <div><h1>AESTHETICA</h1></div>
+        </div>
+        <p class="muted">Sign in to manage your store</p>
+        <div class="notice err" id="err" hidden></div>
+        <form id="f" novalidate>
+            <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required autofocus></div>
+            <div class="field"><label for="pw">Password</label><div class="password-control"><input id="pw" type="password" autocomplete="current-password" required><button class="password-toggle" type="button" data-password-toggle="pw" aria-label="Show password" title="Show password"><i class="fa-regular fa-eye"></i></button></div></div>
+            <button class="btn">Log in</button>
+        </form>
+    </div></div>
+    <div id="toasts"></div>
+    <script src="./js/admin-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ব্যানার ও লোগো — অ্যাডমিন প্যানেল</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --banner-primary:#5C4033; --banner-primary-dark:#432E24; --banner-surface:#fff; --banner-border:#E6E0D8; --banner-ink:#1A1A1A; --banner-muted:#6B625B; }
+        body { background: linear-gradient(135deg, #F6E7D8 0%, #FDFBF7 56%, #F1E8DF 100%); color: var(--banner-ink); min-height:100vh; }
+        .banner-page { max-width:1120px; padding-block:clamp(20px,4vh,44px)!important; }
+        .banner-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+        .banner-heading h2 { color:var(--banner-primary); font-size:clamp(22px,1.75rem,30px); margin:0; }
+        .theme-switch { flex:none; width:42px; height:42px; border:1px solid var(--banner-border); background:var(--banner-surface); color:var(--banner-primary); border-radius:50%; cursor:pointer; transition:transform .18s,background .18s,box-shadow .18s; }
+        .theme-switch:hover { transform:translateY(-2px); background:#FFF0E5; box-shadow:0 8px 18px rgba(67,46,36,.16); }
+        .banner-page .card-header { font-weight:600; }
+        .card { border:1px solid var(--banner-border); border-radius:10px; box-shadow:0 10px 26px rgba(67,46,36,.08); overflow:hidden; background:var(--banner-surface); }
+        .card-header { background:var(--banner-primary)!important; color:#fff!important; border:0; padding:13px 16px; }
+        .banner-page .card-body { padding:clamp(16px,2.2vw,24px); }
+        .banner-page .row.g-4 { --bs-gutter-y:1.1rem; }
+        .banner-page .form-label { color:var(--banner-ink); font-weight:600; }
+        .banner-page .form-control { border-color:var(--banner-border); border-radius:8px; padding:10px 12px; }
+        .banner-page .form-control:focus { border-color:var(--banner-primary); box-shadow:0 0 0 3px rgba(92,64,51,.14); }
+        .banner-page .btn { border-radius:8px; transition:transform .18s,box-shadow .18s,background .18s; }
+        .banner-page .btn:hover { transform:translateY(-2px); box-shadow:0 8px 16px rgba(67,46,36,.18); }
+        .banner-page .btn:active { transform:scale(.98); }
+        .banner-page .btn-primary { background:linear-gradient(135deg,var(--banner-primary),var(--banner-primary-dark)); border:0; }
+        .banner-page .btn-outline-dark { color:var(--banner-primary); border-color:var(--banner-primary); }
+        .banner-page .btn-outline-dark:hover { background:var(--banner-primary); color:#fff; }
+        .logo-preview { width:120px; aspect-ratio:1; margin:auto; display:grid; place-items:center; overflow:hidden; border:1px dashed var(--banner-border); border-radius:14px; background:var(--banner-surface); color:var(--banner-muted); }
+        .logo-preview img { display:none; width:100%; height:100%; object-fit:contain; }
+        .logo-preview.has-media img { display:block; }
+        .logo-preview.has-media .preview-empty { display:none; }
+        .banner-preview { min-height:150px; margin-top:14px; display:grid; place-items:center; overflow:hidden; border:1px dashed var(--banner-border); border-radius:8px; background:var(--banner-surface); color:var(--banner-muted); }
+        .banner-preview img,.banner-preview video { display:block; width:100%; max-height:340px; aspect-ratio:16/7; object-fit:cover; }
+        .custom-slots { margin-top:22px; padding-top:18px; border-top:1px solid var(--banner-border); }
+        .custom-slots h5 { color:var(--banner-primary); font-size:16px; margin-bottom:12px; }
+        .custom-slot { display:grid; grid-template-columns:minmax(120px,220px) minmax(0,1fr) auto; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--banner-border); }
+        .custom-slot:last-child { border-bottom:0; }
+        .custom-slot .banner-preview { min-height:76px; margin:0; }
+        .custom-slot .banner-preview img,.custom-slot .banner-preview video { max-height:100px; aspect-ratio:16/8; }
+        .custom-slot h6 { margin:0 0 4px; overflow-wrap:anywhere; color:var(--banner-ink); }
+        .custom-slot p { margin:0; color:var(--banner-muted); font-size:13px; }
+        body.dark-theme { --banner-primary:#E2C4A8; --banner-primary-dark:#F2D7BE; --banner-surface:#302B27; --banner-border:#4A4039; --banner-ink:#F5EEE6; --banner-muted:#C8BDB4; background:linear-gradient(135deg,#47362D 0%,#282321 60%,#382E28 100%); color:var(--banner-ink); }
+        body.dark-theme .card { box-shadow:0 12px 28px rgba(0,0,0,.22); }
+        body.dark-theme .card-header { background:#49372E!important; color:#F5EEE6!important; }
+        body.dark-theme .form-control { background:#342D28; color:var(--banner-ink); border-color:var(--banner-border); }
+        body.dark-theme .form-control::placeholder { color:var(--banner-muted); }
+        body.dark-theme .banner-page .form-label { color:var(--banner-ink)!important; }
+        body.dark-theme .text-muted { color:var(--banner-muted)!important; }
+        body.dark-theme .btn-primary { color:#221A15; }
+        body.dark-theme .btn-outline-dark { color:var(--banner-primary); border-color:var(--banner-primary); }
+        body.dark-theme .btn-outline-dark:hover { color:#221A15; background:var(--banner-primary); }
+        body.dark-theme .custom-slots h5 { color:var(--banner-primary); }
+        @media(max-width:600px) { .banner-heading { align-items:flex-start; } .banner-page { padding-inline:16px; } .custom-slot { grid-template-columns:1fr auto; gap:8px 12px; } .custom-slot .banner-preview { grid-column:1/-1; } }
+    </style>
+</head>
+<body>
+<div class="container banner-page py-5">
+    <div id="alertBox"></div>
+    <div class="banner-heading">
+        <h2>ব্যানার, লোগো ও কালেকশন ম্যানেজমেন্ট</h2>
+        <button class="theme-switch" type="button" data-banner-theme aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+    </div>
+
+    <div class="row g-4">
+        <!-- SITE LOGO SECTION -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">সাইট লোগো</div>
+                <div class="card-body row align-items-center">
+                    <div class="col-md-3 text-center">
+                        <div id="logoPreviewWrap" class="logo-preview"><img id="logoPreview" alt="Current site logo"><span class="preview-empty">No logo uploaded</span></div>
+                    </div>
+                    <div class="col-md-9">
+                        <form id="logoForm">
+                            <input type="hidden" name="section_key" value="site_logo">
+                            <div class="mb-3">
+                                <label class="form-label">নতুন লোগো আপলোড করুন</label>
+                                <input type="file" name="media_file" class="form-control" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> লোগো আপলোড করুন</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HERO BANNER SECTION -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">হোমপেজ হিরো ব্যানার / ভিডিও</div>
+                <div class="card-body">
+                    <form id="heroForm">
+                        <input type="hidden" name="section_key" value="hero_banner">
+                        <div class="mb-3">
+                            <label class="form-label">ব্যানার টাইটেল</label>
+                            <input type="text" id="heroTitle" name="title" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ছবি বা ভিডিও আপলোড করুন</label>
+                            <input type="file" name="media_file" class="form-control" accept="image/*,video/mp4">
+                            <small id="heroCurrent" class="text-muted d-block mt-1"></small>
+                            <div id="heroPreview" class="banner-preview"><span class="preview-empty">No hero media uploaded</span></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid lang-fa fa-save"></i> হিরো আপডেট করুন</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOM BANNER SECTION -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">কাস্টম ব্যানার / ভিডিও স্লট</div>
+                <div class="card-body">
+                    <form id="customForm">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Section key</label>
+                                <input type="text" name="section_key" id="customSectionKey" class="form-control" placeholder="example: promo_banner_1" required>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label">Title</label>
+                                <input type="text" name="title" id="customTitle" class="form-control" placeholder="Optional title">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">ছবি বা ভিডিও আপলোড করুন</label>
+                                <input type="file" name="media_file" class="form-control" accept="image/*,video/mp4">
+                                <div id="customPreview" class="banner-preview"><span class="preview-empty">Choose media to preview it</span></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3"><i class="fa-solid fa-upload"></i> কাস্টম ব্যানার সেভ করুন</button>
+                    </form>
+                    <div class="custom-slots"><h5>Saved custom banners</h5><div id="customBannerList"><p class="text-muted mb-0">Loading saved banners…</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY COLLECTIONS DYNAMIC SECTION -->
+        <div class="col-12">
+            <h4 class="mb-3">ক্যাটাগরি কালেকশন ইমেজ</h4>
+            <div class="row g-4" id="categoryContainer">
+                <!-- Dynamic Categories will load here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const API_URL = '/api/banners';
+
+function mediaUrl(path) {
+    if (!path) return '';
+    return /^(https?:|blob:|data:)/i.test(path) ? path : `/${path.replace(/^\/+/, '')}`;
+}
+
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+}
+
+function showMessage(message, type = 'success', needsLogin = false) {
+    const box = document.getElementById('alertBox');
+    box.replaceChildren();
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type} alert-dismissible fade show`;
+    alert.setAttribute('role', 'alert');
+    alert.textContent = message;
+    if (needsLogin) {
+        const link = document.createElement('a');
+        link.href = '/admin/login.html';
+        link.className = 'alert-link ms-1';
+        link.textContent = 'Log in';
+        alert.append(link);
+    }
+    const close = document.createElement('button');
+    close.type = 'button'; close.className = 'btn-close'; close.dataset.bsDismiss = 'alert'; close.setAttribute('aria-label', 'Close');
+    alert.append(close); box.append(alert);
+}
+
+function showPreview(container, banner, placeholder) {
+    container.replaceChildren();
+    if (!banner?.media_path) {
+        const empty = document.createElement('span'); empty.className = 'preview-empty'; empty.textContent = placeholder;
+        container.append(empty); return;
+    }
+    const media = document.createElement(banner.media_type === 'video' ? 'video' : 'img');
+    media.src = mediaUrl(banner.media_path);
+    if (media instanceof HTMLVideoElement) { media.controls = true; media.playsInline = true; media.preload = 'metadata'; }
+    else { media.alt = banner.title || 'Uploaded banner'; media.loading = 'eager'; }
+    media.addEventListener('error', () => {
+        const unavailable = document.createElement('span'); unavailable.className = 'preview-empty'; unavailable.textContent = 'Preview unavailable';
+        container.replaceChildren(unavailable);
+    });
+    container.append(media);
+}
+
+function getAdminToken() {
+    try { return JSON.parse(localStorage.getItem('aes_admin'))?.token || ''; } catch { return ''; }
+}
+
+function renderCustomBanners(banners) {
+    const list = document.getElementById('customBannerList');
+    list.replaceChildren();
+    const slots = Object.entries(banners || {}).filter(([key, banner]) => key !== 'hero_banner' && !key.startsWith('cat_img_') && banner.media_path);
+    if (!slots.length) { list.innerHTML = '<p class="text-muted mb-0">No custom banners saved yet.</p>'; return; }
+    slots.forEach(([key, banner]) => {
+        const row = document.createElement('article'); row.className = 'custom-slot';
+        const preview = document.createElement('div'); preview.className = 'banner-preview';
+        showPreview(preview, banner, 'No preview available');
+        const info = document.createElement('div');
+        const title = document.createElement('h6'); title.textContent = banner.title || key;
+        const meta = document.createElement('p'); meta.textContent = `${key} · ${banner.media_type || 'image'}`;
+        info.append(title, meta);
+        const edit = document.createElement('button'); edit.type = 'button'; edit.className = 'btn btn-outline-dark btn-sm'; edit.textContent = 'Edit slot';
+        edit.addEventListener('click', () => {
+            document.getElementById('customSectionKey').value = key;
+            document.getElementById('customTitle').value = banner.title || '';
+            document.getElementById('customForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('customSectionKey').focus({ preventScroll: true });
+        });
+        row.append(preview, info, edit); list.append(row);
+    });
+}
+
+async function loadData() {
+    try {
+        const res = await fetch(API_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Could not load banner data (${res.status}).`);
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Could not load banner data.');
+
+        const logo = document.getElementById('logoPreviewWrap');
+        if (data.current_logo) { logo.classList.add('has-media'); document.getElementById('logoPreview').src = mediaUrl(data.current_logo); }
+        else { logo.classList.remove('has-media'); document.getElementById('logoPreview').removeAttribute('src'); }
+
+        const hero = data.banners?.hero_banner || null;
+        document.getElementById('heroTitle').value = hero?.title || '';
+        document.getElementById('heroCurrent').textContent = hero?.media_path ? `Current: ${hero.media_path}` : 'No hero media uploaded';
+        showPreview(document.getElementById('heroPreview'), hero, 'No hero media uploaded');
+        renderCustomBanners(data.banners);
+        const customKey = document.getElementById('customSectionKey').value.trim();
+        showPreview(document.getElementById('customPreview'), data.banners?.[customKey], 'Choose media to preview it');
+
+        const catContainer = document.getElementById('categoryContainer');
+        catContainer.innerHTML = '';
+        (data.categories || []).forEach(cat => {
+            const sKey = `cat_img_${cat.id}`;
+            const banner = data.banners?.[sKey] || {};
+            const categoryName = escapeHtml(cat.name);
+            const preview = banner.media_path
+                ? `<img src="${escapeHtml(mediaUrl(banner.media_path))}" class="mt-2 rounded" style="width:100%; height:110px; object-fit:cover;" alt="${categoryName} banner" loading="lazy">`
+                : '<small class="text-muted d-block mt-2">কোনো ছবি নেই</small>';
+            catContainer.innerHTML += `
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header">${categoryName}</div>
+                        <div class="card-body">
+                            <form class="catForm" data-section="${sKey}">
+                                <input type="hidden" name="section_key" value="${sKey}">
+                                <div class="mb-3">
+                                    <input type="file" name="media_file" class="form-control" accept="image/*">
+                                    <div class="banner-preview category-preview">${preview}</div>
+                                </div>
+                                <button type="submit" class="btn btn-outline-dark btn-sm w-100">আপডেট</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Attach event listeners to dynamic category forms
+        document.querySelectorAll('.catForm').forEach(form => {
+            form.addEventListener('submit', handleFormSubmit);
+        });
+
+    } catch (err) {
+        showMessage(err.message || 'Could not load banner data.', 'danger');
+    }
+}
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const button = form.querySelector('[type="submit"]');
+    const original = button.innerHTML;
+    const token = getAdminToken();
+    if (!token) { showMessage('Your admin session is missing or expired.', 'warning', true); return; }
+    button.disabled = true; button.innerHTML = '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Saving…';
+
+    try {
+        const res = await fetch(`${API_URL}/update`, {
+            method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: new FormData(form)
+        });
+        const result = await res.json();
+        if (res.status === 401) { localStorage.removeItem('aes_admin'); throw Object.assign(new Error('Your admin session expired.'), { needsLogin: true }); }
+        if (!res.ok || !result.success) throw new Error(result.message || `Upload failed (${res.status}).`);
+        const fileInput = form.querySelector('input[type="file"][name="media_file"]');
+        const localUrl = previewUrls.get(fileInput);
+        if (localUrl) { URL.revokeObjectURL(localUrl); previewUrls.delete(fileInput); }
+        if (fileInput) fileInput.value = '';
+        showMessage(result.message || 'Banner updated.', 'success');
+        await loadData();
+    } catch (err) {
+        showMessage(err.message || 'Upload failed. Check the file and try again.', err.needsLogin ? 'warning' : 'danger', Boolean(err.needsLogin));
+    } finally {
+        button.disabled = false; button.innerHTML = original;
+    }
+}
+
+const previewUrls = new WeakMap();
+document.addEventListener('change', (event) => {
+    const input = event.target.closest('input[type="file"][name="media_file"]');
+    const file = input?.files?.[0];
+    if (!input || !file) return;
+    const oldUrl = previewUrls.get(input);
+    if (oldUrl) URL.revokeObjectURL(oldUrl);
+    const url = URL.createObjectURL(file);
+    previewUrls.set(input, url);
+    const form = input.closest('form');
+    const media = { media_path: url, media_type: file.type.startsWith('video/') ? 'video' : 'image', title: file.name };
+    if (form?.id === 'logoForm') {
+        document.getElementById('logoPreviewWrap').classList.add('has-media');
+        const image = document.getElementById('logoPreview'); image.src = url; image.alt = file.name;
+    } else if (form?.id === 'heroForm') {
+        showPreview(document.getElementById('heroPreview'), media, 'No hero media uploaded');
+        document.getElementById('heroCurrent').textContent = `Selected: ${file.name} · save to publish`;
+    } else if (form?.id === 'customForm') {
+        showPreview(document.getElementById('customPreview'), media, 'Choose media to preview it');
+    } else {
+        const host = input.closest('.mb-3')?.querySelector('.category-preview');
+        if (host) showPreview(host, media, 'কোনো ছবি নেই');
+    }
+});
+
+const applyBannerTheme = () => {
+    const stored = localStorage.getItem('aes_theme') || 'light';
+    document.body.classList.toggle('dark-theme', stored === 'dark');
+    const btn = document.querySelector('[data-banner-theme]');
+    if (btn) {
+        btn.innerHTML = stored === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    }
+};
+
+document.querySelector('[data-banner-theme]').addEventListener('click', () => {
+    const next = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
+    localStorage.setItem('aes_theme', next);
+    applyBannerTheme();
+});
+
+document.getElementById('logoForm').addEventListener('submit', handleFormSubmit);
+document.getElementById('heroForm').addEventListener('submit', handleFormSubmit);
+document.getElementById('customForm').addEventListener('submit', handleFormSubmit);
+
+applyBannerTheme();
+loadData();
+</script>
+
+</body>
+</html>
