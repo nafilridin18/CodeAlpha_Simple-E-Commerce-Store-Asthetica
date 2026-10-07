@@ -1,0 +1,10 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "Asthetica E-commerce Root Scripts",
+  "scripts": {
+    "start": "npm --prefix Backend start",
+    "dev": "npm --prefix Backend run dev",
+    "setup": "npm --prefix Backend run setup"
+  }
+}
